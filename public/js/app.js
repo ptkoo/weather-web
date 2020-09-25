@@ -76,7 +76,7 @@ form.addEventListener('submit', async(e) => {
 
 async function fetchData(term) {
 
-    const rep = await fetch(`http://localhost:3000/weather?address=${term}`)
+    const rep = await fetch(`/weather?address=${term}`)
     const data = await rep.json()
 
     return data.data
@@ -112,21 +112,22 @@ function displayData(weatherInfo) {
                 break;
             case 6:
                 pressure.innerText = item
-                progress.value = `${index}`
+                progress.value = `${index+1}`
                 progress.classList.add('hidden')
                 break;
             case 7:
 
                 const seconds = item + totalUtcSeconds
                 const hour = Math.floor(seconds / 3600)
-                const minutes = Math.floor(seconds / 60) % 60
-
+                let minutes = Math.floor(seconds / 60) % 60
+                if (minutes < 10) { minutes = `0${minutes}` }
                 time.innerText = `${day} ${hour}:${minutes}`
                 progress.value = `${index}`
                 progress.classList.add('hidden')
             default:
                 // code block
         }
+
     })
 }
 
